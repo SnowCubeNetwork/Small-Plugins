@@ -15,7 +15,12 @@
 
 namespace BroomArrow;
 
-class Database{
-	public function __construct($folder){
-	}
+class Database
+{
+
+    public function __construct($folder)
+    {
+
+    }
+
 }
