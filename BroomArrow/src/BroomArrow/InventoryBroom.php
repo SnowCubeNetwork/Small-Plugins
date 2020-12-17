@@ -15,6 +15,9 @@
 
 namespace BroomArrow;
 
-class InventoryBroom{
-	public $id;
+class InventoryBroom
+{
+
+    public $id;
+
 }
