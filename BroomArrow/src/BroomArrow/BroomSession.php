@@ -17,27 +17,32 @@ namespace BroomArrow;
 
 use pocketmine\Player;
 
-class BroomSession{
-	/** @var BroomArrow */
-	private $main;
-	/** @var Player */
-	private $player;
+class BroomSession
+{
 
-	private $isOnBroom;
-	private $currentBroomId;
-	private $brooms;
+    /** @var BroomArrow */
+    private $main;
+    /** @var Player */
+    private $player;
 
-	public function __construct(BroomArrow $main, Player $player){
-		$this->main = $main;
-		$this->player = $player;
-	}
+    private $isOnBroom;
+    private $currentBroomId;
+    private $brooms;
 
-	public function getMain(){
-		return $this->main;
-	}
+    public function __construct(BroomArrow $main, Player $player)
+    {
+        $this->main = $main;
+        $this->player = $player;
+    }
 
-	public function getPlayer(){
-		return $this->player;
-	}
+    public function getMain()
+    {
+        return $this->main;
+    }
+
+    public function getPlayer()
+    {
+        return $this->player;
+    }
 
 }
