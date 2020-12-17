@@ -20,30 +20,39 @@ use pocketmine\event\player\PlayerJoinEvent;
 use pocketmine\Player;
 use pocketmine\plugin\PluginBase;
 
-class BroomArrow extends PluginBase implements Listener{
-	private $sessions = [];
+class BroomArrow extends PluginBase implements Listener
+{
 
-	public function onEnable(){
-		$this->getServer()->getPluginManager()->registerEvents($this, $this);
-		foreach($this->getServer()->getOnlinePlayers() as $player){
-			$this->openSession($player);
-		}
-	}
+    private $sessions = [];
 
-	public function onDisable(){
-		foreach($this->getServer()->getOnlinePlayers() as $player){
-			$this->closeSession($player);
-		}
-	}
+    public function onEnable()
+    {
+        $this->getServer()->getPluginManager()->registerEvents($this, $this);
+        foreach ($this->getServer()->getOnlinePlayers() as $player) {
+            $this->openSession($player);
+        }
+    }
 
-	public function e_join(PlayerJoinEvent $event){
-		$this->openSession($event->getPlayer());
-	}
+    public function onDisable()
+    {
+        foreach ($this->getServer()->getOnlinePlayers() as $player) {
+            $this->closeSession($player);
+        }
+    }
 
-	private function openSession(Player $player){
-		$this->sessions[$player->getId()] = new BroomSession($this, $player);
-	}
+    public function e_join(PlayerJoinEvent $event)
+    {
+        $this->openSession($event->getPlayer());
+    }
 
-	private function closeSession(Player $player){
-	}
+    private function openSession(Player $player)
+    {
+        $this->sessions[$player->getId()] = new BroomSession($this, $player);
+    }
+
+    private function closeSession(Player $player)
+    {
+
+    }
+
 }

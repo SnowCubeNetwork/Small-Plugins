@@ -7,58 +7,68 @@ use pocketmine\Player;
 use pocketmine\plugin\PluginBase;
 use pocketmine\Server;
 
-class ChatChannels extends PluginBase{
-	/** @var Configuration */
-	private $configuration;
-	/** @var ConsoleSubscriber */
-	private $console;
-	/** @var ChannelManager */
-	private $chanMgr;
-	/** @var PrefixAPI */
-	private $prefixes;
-	/** @var SessionControl */
-	private $sessions;
+class ChatChannels extends PluginBase
+{
 
-	public function onEnable(){
-		$this->saveDefaultConfig();
-		$this->configuration = new Configuration($this->getConfig());
-		$this->console = new ConsoleSubscriber($this, $this->configuration->getConsoleName());
-		$this->chanMgr = new ChannelManager($this);
-		$this->chanMgr->addChannel($this->configuration->getDefaultChannel(), $this->console, true); // must be free join
-		$this->prefixes = new PrefixAPI($this);
-		$this->getServer()->getPluginManager()->registerEvents($this->sessions = new SessionControl($this), $this);
-		$this->getServer()->getCommandMap()->registerAll("chan", [
-			new ForceRankCommand($this, "mod", Channel::MODE_MOD, "fa"),
-			new ForceRankCommand($this, "admin", Channel::MODE_ADMIN, "fa"),
-		]);
-	}
+    /** @var Configuration */
+    private $configuration;
+    /** @var ConsoleSubscriber */
+    private $console;
+    /** @var ChannelManager */
+    private $chanMgr;
+    /** @var PrefixAPI */
+    private $prefixes;
+    /** @var SessionControl */
+    private $sessions;
 
-	public function getPrefixAPI(){
-		return $this->prefixes;
-	}
+    public function onEnable()
+    {
+        $this->saveDefaultConfig();
+        $this->configuration = new Configuration($this->getConfig());
+        $this->console = new ConsoleSubscriber($this, $this->configuration->getConsoleName());
+        $this->chanMgr = new ChannelManager($this);
+        $this->chanMgr->addChannel($this->configuration->getDefaultChannel(), $this->console, true); // must be free join
+        $this->prefixes = new PrefixAPI($this);
+        $this->getServer()->getPluginManager()->registerEvents($this->sessions = new SessionControl($this), $this);
+        $this->getServer()->getCommandMap()->registerAll("chan", [
+            new ForceRankCommand($this, "mod", Channel::MODE_MOD, "fa"),
+            new ForceRankCommand($this, "admin", Channel::MODE_ADMIN, "fa"),
+        ]);
+    }
 
-	public function getChannelManager(){
-		return $this->chanMgr;
-	}
+    public function getPrefixAPI()
+    {
+        return $this->prefixes;
+    }
 
-	public function getConsole(){
-		return $this->console;
-	}
+    public function getChannelManager()
+    {
+        return $this->chanMgr;
+    }
 
-	public function getPlayerSub(Player $sender){
-		return $this->sessions->getSession($sender);
-	}
+    public function getConsole()
+    {
+        return $this->console;
+    }
 
-	public function getDefaultChannel(){
-		return $this->chanMgr->getChannel($this->configuration->getDefaultChannel());
-	}
+    public function getPlayerSub(Player $sender)
+    {
+        return $this->sessions->getSession($sender);
+    }
 
-	/**
-	 * @param Server $server
-	 *
-	 * @return self
-	 */
-	public static function getInstance(Server $server){
-		return $server->getPluginManager()->getPlugin("ChatChannels");
-	}
+    public function getDefaultChannel()
+    {
+        return $this->chanMgr->getChannel($this->configuration->getDefaultChannel());
+    }
+
+    /**
+     * @param Server $server
+     *
+     * @return self
+     */
+    public static function getInstance(Server $server)
+    {
+        return $server->getPluginManager()->getPlugin("ChatChannels");
+    }
+
 }
